@@ -76,6 +76,7 @@ public class userRepository {
         if(num <=0){
             throw new Exception("Not Wrong Username");
         }
+        LogInUser = user1;
     return user1;
     }
 
@@ -125,5 +126,49 @@ public class userRepository {
         }catch (Exception exc){
             JOptionPane.showMessageDialog(null, exc);
         }
+    }
+
+    public void delete_user(user user) throws Exception{
+
+        String sql ="DELETE FROM " + cons.DB_TITLE + "." + cons.USER_TABLE +
+                " WHERE (" + cons.USER_ID + " =?";
+        PreparedStatement prSt = db.getDbConnection().prepareStatement(sql);
+
+        prSt.setString(1,String.valueOf(user.getId()));
+        prSt.executeUpdate();
+    }
+
+    public void change_password(String newPassword,String oldPassword,String confPassword) throws Exception{
+        String sqlPassword = "SELECT " + cons.USER_PASSWORD + " FROM " + cons.USER_TABLE + " WHERE " +
+                cons.USER_ID + " =?";
+        PreparedStatement prST1 = db.getDbConnection().prepareStatement(sqlPassword);
+        prST1.setString(1,String.valueOf(LogInUser.getId()));
+        ResultSet resSet = prST1.executeQuery();
+
+        String password = null;
+        while(resSet.next()){
+            password = resSet.getString("password");
+        }
+
+        prST1.close();
+
+        if(oldPassword == password) {
+            if (newPassword.equals(confPassword)) {
+                String sql = "UPDATE " + cons.USER_ID + "." + cons.USER_TABLE + " SET " +
+                        cons.USER_PASSWORD + " =? WHERE (" + cons.USER_ID + " =?";
+                PreparedStatement prST = db.getDbConnection().prepareStatement(sql);
+                prST.setString(1, newPassword);
+                prST.setString(2, String.valueOf(LogInUser.getId()));
+
+                prST.executeUpdate();
+                prST.close();
+            } else
+                throw new Exception("Neteisingas pakartotinis slaptazodis");
+        }else
+            throw new Exception("neteisingas senas slaptazodis");
+    }
+
+    public void setLogInUser(user logInUser) {
+        LogInUser = logInUser;
     }
 }
