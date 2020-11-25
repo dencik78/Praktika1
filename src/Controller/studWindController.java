@@ -4,6 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import Backend.user;
+import Date.userRepository;
 
 public class studWindController {
 
@@ -21,6 +23,9 @@ public class studWindController {
     private Label surnameField;
 
     @FXML
+    private Label groupTitleLabel;
+
+    @FXML
     void clickDelteUser(ActionEvent event) {
 
     }
@@ -28,5 +33,14 @@ public class studWindController {
     @FXML
     void clickDelteUserInGroup(ActionEvent event) {
 
+    }
+
+    public void displayStud(user i) throws Exception{
+        userRepository rp = new userRepository();
+        nameField.setText(i.getName());
+        surnameField.setText(i.getSurname());
+        String title = rp.GetuserGroupTitle(i.getIdGroups());
+        int id = i.getIdGroups();
+        groupTitleLabel.setText(rp.GetuserGroupTitle(i.getIdGroups()));
     }
 }

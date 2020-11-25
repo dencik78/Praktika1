@@ -41,7 +41,7 @@
             </Text>
          </children>
       </Pane>
-      <Pane fx:id="studentuListPane" layoutY="128.0" prefHeight="447.0" prefWidth="811.0" visible="false">
+      <Pane fx:id="studentuListPane" layoutY="128.0" prefHeight="447.0" prefWidth="811.0">
          <children>
             <ScrollPane layoutX="114.0" layoutY="54.0" prefHeight="379.0" prefWidth="683.0">
                <content>
