@@ -12,14 +12,13 @@
             <Font name="System Bold" size="13.0" />
          </font></Label>
       <Button fx:id="DelteUserButton" layoutX="421.0" layoutY="10.0" mnemonicParsing="false" onAction="#clickDelteUser" text="Delete User" />
-      <Button fx:id="deleteuserInGroupButton" layoutX="378.0" layoutY="47.0" mnemonicParsing="false" onAction="#clickDelteUserInGroup" text="Delte User in Group" />
       <Label fx:id="surnameField" layoutX="23.0" layoutY="37.0" prefHeight="17.0" prefWidth="121.0" text="Label">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font></Label>
       <Label fx:id="groupTitleLabel" layoutX="23.0" layoutY="62.0" prefHeight="17.0" prefWidth="121.0" text="Label">
          <font>
-            <Font size="14.0" />
+            <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
    </children>

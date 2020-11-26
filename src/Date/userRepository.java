@@ -1,15 +1,12 @@
 package Date;
 
-import Backend.cons;
-import Backend.group;
-import Backend.user;
+import Backend.*;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import Backend.dataBaseHendler;
 import com.mysql.cj.jdbc.ha.NdbLoadBalanceExceptionChecker;
 
 import javax.swing.*;
@@ -19,6 +16,7 @@ public class userRepository {
     dataBaseHendler db = new dataBaseHendler();
     List<user> userList;
     List<group> groupList;
+    List<dalykai> dalList;
 
     public void registr(user user) throws Exception {
         String sqlT = "SELECT * FROM " + cons.DB_TITLE + "." + cons.USER_TABLE + " WHERE " + cons.USER_USERNAME + " =?";
@@ -87,24 +85,24 @@ public class userRepository {
     }
 
     public void add_new_user_Student(user user) throws Exception{
-        String sqlT = "SELECT * FROM " + cons.DB_TITLE + "." + cons.USER_TABLE + " WHERE " + cons.USER_USERNAME + " =?";
-        PreparedStatement prSt = db.getDbConnection().prepareStatement(sqlT);
-        prSt.setString(1, user.getUsername());
-        ResultSet resSet = prSt.executeQuery();
-
-        int num = 0;
-        while (resSet.next()) {
-            num++;
-        }
-
-        if (num > 0) {
-            throw new Exception("user is system");
-        }
+//        String sqlT = "SELECT * FROM " + cons.DB_TITLE + "." + cons.USER_TABLE + " WHERE " + cons.USER_USERNAME + " =?";
+//        PreparedStatement prSt = db.getDbConnection().prepareStatement(sqlT);
+//        prSt.setString(1, user.getName());
+//        ResultSet resSet = prSt.executeQuery();
+//
+//        int num = 0;
+//        while (resSet.next()) {
+//            num++;
+//        }
+//
+//        if (num > 0) {
+//            throw new Exception("user is system");
+//        }
 
         String sql = "INSERT INTO " + cons.DB_TITLE + "." +
                 cons.USER_TABLE + " (" + cons.USER_NAME + ", " + cons.USER_SURNAME + ", " +
                 cons.USER_GENDER + ", " + cons.USER_DALYKOID + ", " + cons.USER_GRUPESID +
-                ", " + cons.USER_USERNAME + ", " + cons.USER_PASSWORD + " , " + cons.USER_TYPE + ") VALUES " +
+                ", " + cons.USER_USERNAME + ", " + cons.USER_PASSWORD + " , " + cons.USER_TYPE + ", " + cons.USER_LAIPSNIS + ") VALUES " +
                 "(?,?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement prST = db.getDbConnection().prepareStatement(sql);
@@ -113,9 +111,11 @@ public class userRepository {
             prST.setString(3, user.getGender());
             prST.setString(4, null);
             prST.setInt(5, user.getIdGroups());
+            System.out.println(user.getIdGroups());
             prST.setString(6, user.getName());
             prST.setString(7, user.getSurname());
-            prST.setString(8, String.valueOf(user.getType()));
+            prST.setString(8, String.valueOf(0));
+            prST.setString(9, null);
 
             prST.executeUpdate();
             prST.close();
@@ -126,25 +126,25 @@ public class userRepository {
     }
 
     public void add_new_user_Teacher(user user) throws Exception {
-        String sqlT = "SELECT * FROM " + cons.DB_TITLE + "." + cons.USER_TABLE + " WHERE " + cons.USER_USERNAME + " =?";
-        PreparedStatement prSt = db.getDbConnection().prepareStatement(sqlT);
-        prSt.setString(1, user.getUsername());
-        ResultSet resSet = prSt.executeQuery();
-
-        int num = 0;
-        while (resSet.next()) {
-            num++;
-        }
-
-        if (num > 0) {
-            throw new Exception("user is system");
-        }
+//        String sqlT = "SELECT * FROM " + cons.DB_TITLE + "." + cons.USER_TABLE + " WHERE " + cons.USER_USERNAME + " =?";
+//        PreparedStatement prSt = db.getDbConnection().prepareStatement(sqlT);
+//        prSt.setString(1, user.getUsername());
+//        ResultSet resSet = prSt.executeQuery();
+//
+//        int num = 0;
+//        while (resSet.next()) {
+//            num++;
+//        }
+//
+//        if (num > 0) {
+//            throw new Exception("user is system");
+//        }
 
         String sql = "INSERT INTO " + cons.DB_TITLE + "." +
                 cons.USER_TABLE + " (" + cons.USER_NAME + ", " + cons.USER_SURNAME + ", " +
                 cons.USER_GENDER + ", " + cons.USER_DALYKOID + ", " + cons.USER_GRUPESID +
-                ", " + cons.USER_USERNAME + ", " + cons.USER_PASSWORD + "," + cons.USER_TYPE + ") VALUES " +
-                "(?,?,?,?,?,?,?,?,?)";
+                ", " + cons.USER_USERNAME + ", " + cons.USER_PASSWORD + "," + cons.USER_TYPE + ", " + cons.USER_LAIPSNIS +
+                ") VALUES " + "(?,?,?,?,?,?,?,?,?)";
         try {
 
             PreparedStatement prST = db.getDbConnection().prepareStatement(sql);
@@ -155,7 +155,8 @@ public class userRepository {
             prST.setString(5, null);
             prST.setString(6, user.getName());
             prST.setString(7, user.getSurname());
-            prST.setString(8, String.valueOf(user.getType()));
+            prST.setString(8, String.valueOf(1));
+            prST.setString(9,user.getLaipsnis());
 
             prST.executeUpdate();
             prST.close();
@@ -165,14 +166,26 @@ public class userRepository {
     }
 
     public void delete_user(user user) throws Exception{
-
         String sql ="DELETE FROM " + cons.DB_TITLE + "." + cons.USER_TABLE +
-                " WHERE (" + cons.USER_ID + " =?";
+                " WHERE (" + cons.USER_ID + " =?)";
+
         PreparedStatement prSt = db.getDbConnection().prepareStatement(sql);
 
         prSt.setString(1,String.valueOf(user.getId()));
         prSt.executeUpdate();
     }
+
+    public void delete_dalykas(dalykai dal) throws Exception{
+        String sql ="DELETE FROM " + cons.DB_TITLE + "." + cons.DALYKAI_TABLE +
+                " WHERE (" + cons.DALYKAI_ID + " =?)";
+
+        PreparedStatement prSt = db.getDbConnection().prepareStatement(sql);
+
+        prSt.setString(1,String.valueOf(dal.getId()));
+        prSt.executeUpdate();
+    }
+
+
 
     public void change_password(String newPassword,String oldPassword,String confPassword) throws Exception{
         String sqlPassword = "SELECT " + cons.USER_PASSWORD + " FROM " + cons.DB_TITLE + "." + cons.USER_TABLE + " WHERE " +
@@ -235,11 +248,12 @@ public class userRepository {
         ResultSet resSet = prST.executeQuery();
 
         while (resSet.next()) {
+            int Id = resSet.getInt("id");
             String name = resSet.getString("name");
             String surname = resSet.getString("surname");
             String gender = resSet.getString("gender");
             int id1 = resSet.getInt("grupesId");
-            userList.add(new user(name, surname, gender,id1));
+            userList.add(new user(name, surname, gender,id1,Id));
         }
         return userList;
     }
@@ -254,11 +268,12 @@ public class userRepository {
         ResultSet resSet = prST.executeQuery();
 
         while (resSet.next()) {
+            int id = resSet.getInt("id");
             String name = resSet.getString("name");
             String surname = resSet.getString("surname");
             String gender = resSet.getString("gender");
-            int id = resSet.getInt("grupesId");
-            userList.add(new user(name, surname, gender, id));
+            int Gid = resSet.getInt("grupesId");
+            userList.add(new user(name, surname, gender, Gid,id));
         }
         return userList;
     }
@@ -273,5 +288,75 @@ public class userRepository {
             }
         }
         return title;
+    }
+
+    public List<dalykai> getDalykuList() throws Exception{
+        dalList = new ArrayList<>();
+
+        String sql = "SELECT * FROM dalykas";
+        PreparedStatement prST = db.getDbConnection().prepareStatement(sql);
+        ResultSet resSet = prST.executeQuery();
+        while(resSet.next()){
+            int id = resSet.getInt("id");
+            String pavadinimas = resSet.getString("pavadinimas");
+            String aprasymas = resSet.getString("aprasymas");
+            dalList.add(new dalykai(id,pavadinimas,aprasymas));
+        }
+        return dalList;
+
+    }
+
+    public void add_new_dal(dalykai dal) throws Exception{
+       // INSERT INTO `akademine_sistema`.`dalykas` (`pavadinimas`, `aprasymas`) VALUES ('weq', 'qwe');
+
+
+        String sql = "INSERT INTO " + cons.DB_TITLE + "." + cons.DALYKAI_TABLE + " (" +
+                cons.DALYKAI_PAVADINIMAS + ", " + cons.DALYKAI_APRASYMAS + ") VALUES (?,?)";
+
+        PreparedStatement prST =db.getDbConnection().prepareStatement(sql);
+        prST.setString(1, dal.getTitle());
+        prST.setString(2, dal.getAprasymas());
+        prST.executeUpdate();
+    }
+
+    public void add_new_group(int num[],String pavadinimas)throws Exception{
+
+
+        String sql = "INSERT INTO "+cons.DB_TITLE + "." + cons.GROUP_TABLE +  "(" +
+                cons.GROUP_PAVADINIMAS + ") VALUES (?)";
+
+        PreparedStatement prST = db.getDbConnection().prepareStatement(sql);
+
+        prST.setString(1,pavadinimas);
+        prST.executeUpdate();
+
+        String sql1 = "SELECT id FROM " + cons.GROUP_TABLE + " WHERE ( " + cons.GROUP_PAVADINIMAS +
+                " = ?)";
+
+        PreparedStatement prST1 = db.getDbConnection().prepareStatement(sql1);
+        prST1.setString(1,pavadinimas);
+        ResultSet resSet = prST1.executeQuery();
+        int groupId = 0;
+
+        while(resSet.next()){
+            groupId = resSet.getInt("id");
+        }
+
+        for(int i = 0; i < num.length ; i++){
+            add_new_dal_in_group(num[i],groupId);
+        }
+
+    }
+
+    public void add_new_dal_in_group(int dal,int group) throws Exception{
+        String sql = "INSERT INTO " + cons.DB_TITLE + "." + cons.GROUPDAL_TABLE  + " (" +
+                cons.GROUPDAL_GROUPID + ", " + cons.GROUPDAL_DALID + ") VALUES (?,?)";
+
+        PreparedStatement prST = db.getDbConnection().prepareStatement(sql);
+        prST.setString(1,String.valueOf(group));
+        prST.setString(2,String.valueOf(dal));
+
+        prST.executeUpdate();
+
     }
 }

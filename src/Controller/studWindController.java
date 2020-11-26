@@ -25,22 +25,24 @@ public class studWindController {
     @FXML
     private Label groupTitleLabel;
 
-    @FXML
-    void clickDelteUser(ActionEvent event) {
-
-    }
+    private user userSave;
+    adminWindController cgw;
 
     @FXML
-    void clickDelteUserInGroup(ActionEvent event) {
-
+    void clickDelteUser(ActionEvent event) throws Exception {
+        userRepository rp = new userRepository();
+        rp.delete_user(userSave);
+        cgw.updateGroup();
     }
 
-    public void displayStud(user i) throws Exception{
+    public void displayStud(user i,adminWindController cgw) throws Exception{
         userRepository rp = new userRepository();
         nameField.setText(i.getName());
         surnameField.setText(i.getSurname());
         String title = rp.GetuserGroupTitle(i.getIdGroups());
         int id = i.getIdGroups();
+        userSave = i;
+        this.cgw = cgw;
         groupTitleLabel.setText(rp.GetuserGroupTitle(i.getIdGroups()));
     }
 }

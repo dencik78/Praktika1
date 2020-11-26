@@ -15,4 +15,24 @@ public class cons {
     public static final String USER_USERNAME = "username";
     public static final String USER_PASSWORD = "password";
     public static final String USER_TYPE = "type";
+    public static final String USER_LAIPSNIS = "laipsnis";
+
+    //group TABLE
+    public static final String GROUP_TABLE = "grupe";
+    public static final String GROUP_ID = "id";
+    public static final String GROUP_PAVADINIMAS = "pavadinimas";
+
+    //groupDal TABLE
+    public static final String GROUPDAL_TABLE = "groupdal";
+    public static final String GROUPDAL_ID = "id";
+    public static final String GROUPDAL_GROUPID = "idGroup";
+    public static final String GROUPDAL_DALID = "idDal";
+
+
+    //Dalykai TABLE
+    public static final String DALYKAI_TABLE = "dalykas";
+    public static final String DALYKAI_ID = "id";
+    public static final String DALYKAI_PAVADINIMAS = "pavadinimas";
+    public static final String DALYKAI_APRASYMAS = "aprasymas";
+
 }

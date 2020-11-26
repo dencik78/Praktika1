@@ -11,6 +11,11 @@ public class dalykai {
         this.title = title;
     }
 
+    public dalykai(String title,String aprasymas){
+        this.aprasymas = aprasymas;
+        this.title = title;
+    }
+
     public int getId() {
         return id;
     }

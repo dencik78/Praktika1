@@ -13,10 +13,10 @@
       <Button fx:id="singOutbutton" layoutX="745.0" layoutY="14.0" mnemonicParsing="false" onAction="#clickSingOut" text="Sing Out" />
       <Pane fx:id="newPane" layoutY="121.0" prefHeight="454.0" prefWidth="811.0" visible="false">
          <children>
-            <Button layoutX="41.0" layoutY="54.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="215.0" text="New Student" />
-            <Button layoutX="41.0" layoutY="128.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="215.0" text="New Destytojas" />
-            <Button layoutX="41.0" layoutY="206.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="215.0" text="New Dalykas" />
-            <Button layoutX="41.0" layoutY="282.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="215.0" text="New Group" />
+            <Button fx:id="newStudentbutton" layoutX="41.0" layoutY="54.0" mnemonicParsing="false" onAction="#newStudentButtonClick" prefHeight="60.0" prefWidth="215.0" text="New Student" />
+            <Button fx:id="newDestytojaiButton" layoutX="41.0" layoutY="128.0" mnemonicParsing="false" onAction="#clickNewDestytojai" prefHeight="60.0" prefWidth="215.0" text="New Destytojas" />
+            <Button fx:id="newDalykas" layoutX="41.0" layoutY="206.0" mnemonicParsing="false" onAction="#newDalykasClick" prefHeight="60.0" prefWidth="215.0" text="New Dalykas" />
+            <Button fx:id="newGroup" layoutX="41.0" layoutY="282.0" mnemonicParsing="false" onAction="#newGroupClick" prefHeight="60.0" prefWidth="215.0" text="New Group" />
          </children>
       </Pane>
       <Button fx:id="newButton" layoutX="14.0" layoutY="77.0" mnemonicParsing="false" onAction="#newButtonClick" prefHeight="40.0" prefWidth="78.0" text="New" />

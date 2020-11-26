@@ -1,5 +1,6 @@
 package Controller;
 
+import Backend.dalykai;
 import Backend.group;
 import Backend.user;
 import Date.userRepository;
@@ -17,6 +18,7 @@ import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class adminWindController {
@@ -36,6 +38,11 @@ public class adminWindController {
     @FXML
     private Button grupesButton;
 
+    @FXML
+    private Button newDalykas;
+
+    @FXML
+    private Button newGroup;
 
     @FXML
     private Button buttonAllList;
@@ -53,7 +60,13 @@ public class adminWindController {
     private FlowPane contentDalykuList;
 
     @FXML
+    private Button newDestytojaiButton;
+
+    @FXML
     private Pane studentuListPane;
+
+    @FXML
+    private Button newStudentbutton;
 
     @FXML
     private FlowPane contentStudentuList;
@@ -76,16 +89,17 @@ public class adminWindController {
     userRepository userRep = new userRepository();
     private List<group> groupList;
     private List<user> listUser;
+    private List<dalykai> dalList;
 
     @FXML
-    void clickDalykaiButton(ActionEvent event) {
+    void clickDalykaiButton(ActionEvent event)throws Exception{
         propertiesPane.setVisible(false);
         studentuListPane.setVisible(false);
         newPane.setVisible(false);
         dalListPane.setVisible(true);
 
      //   FXMLLoader loader = new FXMLLoader(getClass().getResource("../Frontend"))
-
+        displayDal();
     }
 
     @FXML
@@ -102,6 +116,16 @@ public class adminWindController {
         showCategory();
         displayUser();
     }
+
+    public void updateGroup() throws Exception{
+        contentStudentuList.getChildren().clear();
+        displayUser();
+    }
+    public void updateDal() throws Exception{
+        contentDalykuList.getChildren().clear();
+        displayDal();
+    }
+
 
     @FXML
     void clickPropertiesButton(ActionEvent event) {
@@ -166,7 +190,7 @@ public class adminWindController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../Frontend/studentwind.fxml"));
             Parent root = loader.load();
             studWindController controller = loader.getController();
-            controller.displayStud(i);
+            controller.displayStud(i,this);
             contentStudentuList.getChildren().add(root);
 
         }
@@ -185,7 +209,7 @@ public class adminWindController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../Frontend/studentwind.fxml"));
             Parent root = loader.load();
             studWindController controller = loader.getController();
-            controller.displayStud(i);
+            controller.displayStud(i,this);
             contentStudentuList.getChildren().add(root);
 
         }
@@ -197,10 +221,58 @@ public class adminWindController {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("../Frontend/studentwind.fxml"));
                 Parent root = loader.load();
                 studWindController controller = loader.getController();
-                controller.displayStud(i);
+                controller.displayStud(i,this);
                 contentStudentuList.getChildren().add(root);
 
             }
         }
 
+    @FXML
+    void newStudentButtonClick(ActionEvent event) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../Frontend/newStudentAdd.fxml"));
+        Parent  root = loader.load();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root,494,335));
+        stage.show();
+    }
+
+    @FXML
+    void clickNewDestytojai(ActionEvent event) throws Exception{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../Frontend/newAddDestytojas.fxml"));
+        Parent  root = loader.load();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root,494,335));
+        stage.show();
+    }
+
+    @FXML
+    void newDalykasClick(ActionEvent event) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../Frontend/newAddDalykas.fxml"));
+        Parent  root = loader.load();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root,494,335));
+        stage.show();
+    }
+
+    @FXML
+    void newGroupClick(ActionEvent event) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../Frontend/newAddGroup.fxml"));
+        Parent  root = loader.load();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root,494,335));
+        stage.show();
+    }
+
+    public void displayDal() throws Exception{
+        dalList = new ArrayList<>();
+        dalList = userRep.getDalykuList();
+        contentDalykuList.getChildren().clear();
+        for(dalykai d : dalList) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../Frontend/dalSarasas.fxml"));
+            Parent root = loader.load();
+            dalSarasasController controller = loader.getController();
+            controller.display(d, this);
+            contentDalykuList.getChildren().add(root);
+        }
+    }
 }

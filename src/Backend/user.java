@@ -7,6 +7,7 @@ public class user extends person {
     protected int type;
     protected int idGroups;
     protected int idLesson;
+    protected  String laipsnis;
 
     public user(String name,String surname,String gender,String username,String password,int id,int type,int idGroups,int idLesson){
         super(name,surname,gender);
@@ -20,9 +21,20 @@ public class user extends person {
 
     }
 
-    public user(String name,String surname,String gender,int idGroups){
+    public user(String name,String surname,String gender,int idGroups,int id){
         super(name,surname,gender);
     this.idGroups = idGroups;
+    this.id = id;
+    }
+    public user(String name,String surname,String gender,int idGroups){
+        super(name,surname,gender);
+        this.idGroups = idGroups;
+    }
+
+    public user(String name,String surname,String laipsnis,String gender,int idLesson){
+        super(name,surname,gender);
+        this.idLesson = idLesson;
+        this.laipsnis = laipsnis;
     }
 
     public String getUsername() {
@@ -47,5 +59,9 @@ public class user extends person {
 
     public int getIdLesson() {
         return idLesson;
+    }
+
+    public String getLaipsnis(){
+        return laipsnis;
     }
 }
