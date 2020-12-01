@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import Date.userRepository;
 
+import javax.swing.*;
+
 public class newDestytojasController {
 
     @FXML
@@ -70,21 +72,27 @@ public class newDestytojasController {
 
     @FXML
     void clickSaveButton(ActionEvent event) throws Exception {
-        if(menChekBox.isSelected()){
+        if (menChekBox.isSelected()) {
             gender = "Men";
-        }else if(womenCheckBox.isSelected()){
+        } else if (womenCheckBox.isSelected()) {
             gender = "Women";
         }
+        try {
+            if (nameTextField.getText().isEmpty() || surnameTextField.getText().isEmpty()) {
+                throw new Exception("Neivesti duomenis");
+            } else {
+                ObservableList<Integer> SelIndexList = ListDal.getSelectionModel().getSelectedIndices();
+                List<dalykai> listG = rp.getDalykuList();
+                int curId = listG.get(SelIndexList.get(0)).getId();
 
-        ObservableList<Integer> SelIndexList = ListDal.getSelectionModel().getSelectedIndices();
-        List<dalykai> listG = rp.getDalykuList();
-        int curId = listG.get(SelIndexList.get(0)).getId();
 
+                user user = new user(nameTextField.getText().trim(), surnameTextField.getText().trim(), laipsnisTextField.getText().trim(), gender, curId);
+                rp.add_new_user_Teacher(user);
 
-        user user = new user(nameTextField.getText().trim(),surnameTextField.getText().trim(),laipsnisTextField.getText().trim(),gender,curId);
-        rp.add_new_user_Teacher(user);
-
-        saveButton.getScene().getWindow().hide();
+                saveButton.getScene().getWindow().hide();
+            }
+        } catch (Exception exc) {
+            JOptionPane.showMessageDialog(null, exc.getMessage());
+        }
     }
-
 }

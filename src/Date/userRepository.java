@@ -4,6 +4,7 @@ import Backend.*;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -358,5 +359,123 @@ public class userRepository {
 
         prST.executeUpdate();
 
+    }
+
+    public List<group> getGroupIDLesson(int dal) throws Exception{
+        List<group> userList1 = new ArrayList<>();
+
+
+        String sql = "SELECT idGroup FROM " + cons.DB_TITLE + "." +
+                cons.GROUPDAL_TABLE + " WHERE " + cons.GROUPDAL_DALID + "=?";
+
+        PreparedStatement prST = db.getDbConnection().prepareStatement(sql);
+        prST.setString(1,String.valueOf(dal));
+
+        ResultSet resSet = prST.executeQuery();
+        while(resSet.next()) {
+            String sql1 = "SELECT * FROM grupe WHERE " + cons.GROUP_ID + "=?";
+            PreparedStatement prST1 = db.getDbConnection().prepareStatement(sql1);
+            prST1.setString(1,resSet.getString("idGroup"));
+
+            ResultSet resSet1 = prST1.executeQuery();
+            while (resSet1.next()) {
+                int id = resSet1.getInt("id");
+                String pavadinimas = resSet1.getString("pavadinimas");
+                userList1.add(new group(id,pavadinimas));
+            }
+        }
+
+        return userList1;
+    }
+
+    public int getMark(int idDal,int idStud) throws Exception{
+        int mark = 0;
+        String sql = "SELECT pazymis FROM " + cons.DB_TITLE + "." + cons.MARK_TABLE +
+                " WHERE " + cons.MARK_IDDAL + "=? AND " + cons.MARK_IDSTUD + " =?";
+        PreparedStatement prST = db.getDbConnection().prepareStatement(sql);
+            prST.setString(1,String.valueOf(idDal));
+            prST.setString(2,String.valueOf(idStud));
+
+            ResultSet resSet = prST.executeQuery();
+            while(resSet.next()){
+                mark = resSet.getInt("pazymis");
+            }
+        return mark;
+    }
+
+
+
+    public List<dalykai> getLessonList(int group) throws Exception{
+        List<dalykai> dalList = new ArrayList<>();
+
+
+        String sql = "SELECT idDal FROM " + cons.DB_TITLE + "." +
+                cons.GROUPDAL_TABLE + " WHERE " + cons.GROUPDAL_GROUPID + "=?";
+
+        PreparedStatement prST = db.getDbConnection().prepareStatement(sql);
+        prST.setString(1,String.valueOf(group));
+
+        ResultSet resSet = prST.executeQuery();
+        while(resSet.next()) {
+            String sql1 = "SELECT * FROM dalykas WHERE " + cons.DALYKAI_ID + "=?";
+            PreparedStatement prST1 = db.getDbConnection().prepareStatement(sql1);
+            prST1.setString(1,resSet.getString("idDal"));
+
+            ResultSet resSet1 = prST1.executeQuery();
+            while (resSet1.next()) {
+                int id = resSet1.getInt("id");
+                String pavadinimas = resSet1.getString("pavadinimas");
+                String aprasymas = resSet1.getString("aprasymas");
+                dalList.add(new dalykai(id,pavadinimas,aprasymas));
+            }
+        }
+
+        return dalList;
+    }
+
+    public user userNameT(int dal) throws Exception{
+        user user = null;
+        String sql = "SELECT * FROM " + cons.DB_TITLE + "." + cons.USER_TABLE + " WHERE " +
+                cons.USER_DALYKOID + " =?";
+        PreparedStatement prST = db.getDbConnection().prepareStatement(sql);
+        prST.setString(1,String.valueOf(dal));
+        ResultSet resSet = prST.executeQuery();
+        while(resSet.next()){
+            String name = resSet.getString("name");
+            String surname = resSet.getString("surname");
+            String laipsnis = resSet.getString("laipsnis");
+            String gender = resSet.getString("gender");
+            int idLes = resSet.getInt("dalykoId");
+            user = new user(name,surname,laipsnis,gender,idLes);
+        }
+        return user;
+    }
+
+    public void updateMark(String mark,int idDal,int idStud) throws Exception{
+        String sql = "UPDATE " + cons.DB_TITLE + "." + cons.MARK_TABLE + " SET " +
+                cons.MARK_MARK + " =? WHERE " + cons.MARK_IDDAL + " =? AND " +
+                cons.MARK_IDSTUD + " =?";
+
+        PreparedStatement prST = db.getDbConnection().prepareStatement(sql);
+
+        prST.setString(1,mark);
+        prST.setString(2,String.valueOf(idDal));
+        prST.setString(3,String.valueOf(idStud));
+
+        prST.executeUpdate();
+        prST.close();
+    }
+
+    public void newMark(String mark,int idDal,int idStud) throws SQLException, ClassNotFoundException {
+
+        String sql = "INSERT INTO " + cons.DB_TITLE + "." + cons.MARK_TABLE + " (" +
+                cons.MARK_IDDAL + "," + cons.MARK_IDSTUD + "," + cons.MARK_MARK + ") VALUES (?,?,?)";
+
+        PreparedStatement prST = db.getDbConnection().prepareStatement(sql);
+        prST.setString(1,String.valueOf(idDal));
+        prST.setString(2,String.valueOf(idStud));
+        prST.setString(3,mark);
+        prST.executeUpdate();
+        prST.close();
     }
 }

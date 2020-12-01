@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="671.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.infoDestmarkController">
+   <children>
+      <Pane layoutX="10.0" layoutY="10.0" prefHeight="80.0" prefWidth="651.0" style="-fx-background-color: #FFFFFF;">
+         <children>
+            <Label fx:id="nameSurnameLabel" layoutX="14.0" layoutY="32.0" prefHeight="17.0" prefWidth="144.0" text="Label" />
+            <Label fx:id="markLabel" layoutX="312.0" layoutY="32.0" text="Label" />
+            <Button fx:id="updateMark" layoutX="564.0" layoutY="7.0" mnemonicParsing="false" onAction="#updateClixkMark" prefHeight="25.0" prefWidth="73.0" text="Kiesti" />
+            <Button fx:id="newmark" layoutX="564.0" layoutY="37.0" mnemonicParsing="false" onAction="#newmarkClick" prefHeight="25.0" prefWidth="73.0" text="Iterpti" />
+         </children>
+      </Pane>
+   </children>
+</Pane>

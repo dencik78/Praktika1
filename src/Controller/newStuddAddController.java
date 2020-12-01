@@ -14,6 +14,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import javax.swing.*;
+import java.awt.event.InputEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,21 +69,26 @@ public class newStuddAddController {
 
     @FXML
     void clickSaveButton(ActionEvent event) throws Exception {
-        if(menChekBox.isSelected()){
+        if (menChekBox.isSelected()) {
             gender = "Men";
-        }else if(womenCheckBox.isSelected()){
+        } else if (womenCheckBox.isSelected()) {
             gender = "Women";
         }
+        int curId = 0;
 
-        ObservableList<Integer> SelIndexList = ListGruop.getSelectionModel().getSelectedIndices();
-        List<group> listG = rp.getGroupList();
-        int curId = listG.get(SelIndexList.get(0)).getId();
-
-
-        user user = new user(nameTextField.getText().trim(),surnameTextField.getText().trim(),gender,curId);
-
-        rp.add_new_user_Student(user);
-
-        saveButton.getScene().getWindow().hide();
+        try {
+            if (nameTextField.getText().isEmpty() || surnameTextField.getText().isEmpty()) {
+                throw new Exception("neivesti duoemnis");
+            } else {
+                ObservableList<Integer> SelIndexList = ListGruop.getSelectionModel().getSelectedIndices();
+                List<group> listG = rp.getGroupList();
+                curId = listG.get(SelIndexList.get(0)).getId();
+                user user = new user(nameTextField.getText().trim(), surnameTextField.getText().trim(), gender, curId);
+                rp.add_new_user_Student(user);
+                saveButton.getScene().getWindow().hide();
+            }
+        }catch (Exception exc){
+            JOptionPane.showMessageDialog(null,exc.getMessage());
+        }
     }
 }

@@ -14,6 +14,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
+import javax.swing.*;
+
 public class newAddGroupController {
 
     userRepository rp = new userRepository();
@@ -79,14 +81,21 @@ public class newAddGroupController {
     public void clickSaveButton(ActionEvent actionEvent) throws Exception {
         nums = new int[Chouse.size()];
         int i = 0;
-        for(dalykai d :Chouse){
+        for (dalykai d : Chouse) {
             nums[i] = d.getId();
             i++;
         }
+        try {
+            if (titleGroupAddField.getText().isEmpty()) {
+                throw new Exception("Neivesti duomenis");
+            } else {
+                rp.add_new_group(nums, titleGroupAddField.getText().trim());
 
-        rp.add_new_group(nums,titleGroupAddField.getText().trim());
 
-
-        saveButton.getScene().getWindow().hide();
+                saveButton.getScene().getWindow().hide();
+            }
+        } catch (Exception exc) {
+            JOptionPane.showMessageDialog(null, exc.getMessage());
+        }
     }
 }

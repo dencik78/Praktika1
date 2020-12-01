@@ -9,6 +9,8 @@ import Date.userRepository;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
+import javax.swing.*;
+
 public class newAddDalykasController {
 
     @FXML
@@ -22,9 +24,16 @@ public class newAddDalykasController {
 
 
     public void clickSaveButton(ActionEvent actionEvent) throws Exception {
-        userRepository rp =new userRepository();
-        rp.add_new_dal(new dalykai(titleAddDalykas.getText().trim(),aprasymasField.getText().trim()));
-        savebutton.getScene().getWindow().hide();
-
+        userRepository rp = new userRepository();
+        try {
+            if (titleAddDalykas.getText().isEmpty() || aprasymasField.getText().isEmpty()) {
+                throw new Exception("Nevivesti duomenis");
+            } else {
+                rp.add_new_dal(new dalykai(titleAddDalykas.getText().trim(), aprasymasField.getText().trim()));
+                savebutton.getScene().getWindow().hide();
+            }
+        } catch (Exception exc) {
+            JOptionPane.showMessageDialog(null, exc.getMessage());
+        }
     }
 }

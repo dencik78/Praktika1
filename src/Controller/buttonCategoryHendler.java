@@ -10,6 +10,7 @@ public class buttonCategoryHendler<ActionEvent extends Event> implements EventHa
 
     private group g;
     private adminWindController cgw;
+    private destWindController cgw1;
 
 
     public buttonCategoryHendler(group g,adminWindController cgw){
@@ -17,10 +18,19 @@ public class buttonCategoryHendler<ActionEvent extends Event> implements EventHa
         this.cgw = cgw;
     }
 
+    public buttonCategoryHendler(group g,destWindController cgw){
+        this.g = g;
+        this.cgw1 = cgw;
+    }
+
     @Override
     public void handle(ActionEvent actionEvent) {
         try {
-            cgw.displayUserGroup(g.getId());
+            if(cgw !=null) {
+                cgw.displayUserGroup(g.getId());
+            }else if(cgw1 != null){
+                cgw1.displayUserGroup(g.getId());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

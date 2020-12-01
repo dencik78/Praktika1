@@ -44,12 +44,19 @@ public class logInWindowController {
                 }else if (user.getType() == 0) {
                     FXMLLoader root = new FXMLLoader(getClass().getResource("../Frontend/studentWindow.fxml"));
                     Parent loader = root.load();
+                    studentWindController controller = root.getController();
+                    controller.mainPaneInfo(user);
+                    controller.display();
                     Stage stage = new Stage();
                     stage.setScene((new Scene(loader, 811, 575)));
                     stage.show();
                 }else if(user.getType() == 1){
-                    FXMLLoader root = new FXMLLoader(getClass().getResource("../Frontend/destitojoWindow.fxml"));
+                    FXMLLoader root = new FXMLLoader(getClass().getResource("../Frontend/destytWindow.fxml"));
                     Parent loader = root.load();
+                    destWindController controller = root.getController();
+                    controller.setDal(user.getIdLesson());
+                    controller.infoMain(user);
+                    controller.showCategory();
                     Stage stage = new Stage();
                     stage.setScene((new Scene(loader, 811, 575)));
                     stage.show();

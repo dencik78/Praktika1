@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane focusTraversable="true" prefHeight="204.0" prefWidth="231.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.NewMarkWindowscontroller">
+   <children>
+      <Label fx:id="titleWindow" layoutX="41.0" layoutY="14.0" prefHeight="17.0" prefWidth="149.0" text="Label" textAlignment="CENTER" />
+      <Pane fx:id="updatePane" layoutY="29.0" prefHeight="180.0" prefWidth="231.0" visible="false">
+         <children>
+            <Text layoutX="14.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dabartinis Pazymis:" />
+            <Text layoutX="14.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Keisti i " />
+            <TextField fx:id="markField" layoutX="65.0" layoutY="78.0" prefHeight="25.0" prefWidth="31.0" />
+            <Button fx:id="saveButton" layoutX="95.0" layoutY="143.0" mnemonicParsing="false" onAction="#clickSaveButton" text="Save" />
+            <Label fx:id="marklabel" layoutX="125.0" layoutY="33.0" text="label" />
+         </children>
+      </Pane>
+      <Pane fx:id="updatePane1" layoutY="29.0" prefHeight="180.0" prefWidth="231.0" visible="false">
+         <children>
+            <Text layoutX="14.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Iterpti nauja pažymi " />
+            <TextField fx:id="newmarkField" layoutX="129.0" layoutY="36.0" prefHeight="25.0" prefWidth="31.0" />
+            <Button fx:id="newsaveButton1" layoutX="95.0" layoutY="143.0" mnemonicParsing="false" onAction="#clickNewSaveButton" text="Save" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

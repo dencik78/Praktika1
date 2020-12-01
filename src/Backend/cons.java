@@ -35,4 +35,11 @@ public class cons {
     public static final String DALYKAI_PAVADINIMAS = "pavadinimas";
     public static final String DALYKAI_APRASYMAS = "aprasymas";
 
+    //MARK TABLE
+    public static final String MARK_TABLE = "pazymis";
+    public static final String MARK_ID = "id";
+    public static final String MARK_IDDAL = "idDalyko";
+    public static final String MARK_IDSTUD = "idStudentas";
+    public static final String MARK_MARK = "pazymis";
+
 }
